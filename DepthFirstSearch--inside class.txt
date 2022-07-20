@@ -1,0 +1,51 @@
+#time-->O(V+E);space-->O(V)
+class Node:
+    def __init__(self,name1):
+        self.childrenNodes=[]
+        self.name1=name1
+
+    def addChildNodes(self,name):
+        self.childrenNodes.append(Node(name))
+
+    def depthfirstSearchIt(self,visited):
+        visited.append(self.name1)
+        stack=self.childrenNodes
+        while len(stack)!=0:
+            var=stack.pop(0)
+            visited.append(var.name1)
+            if len(var.childrenNodes)!=0:
+                stack=var.childrenNodes+stack
+
+        return visited
+
+    def depthfirstSearchRec(self,array):
+        array.append(self.name1)
+        for child in self.childrenNodes:
+            child.depthfirstSearchRec(array)
+
+        return array
+
+
+
+root=Node("A")
+root.addChildNodes("B")
+root.addChildNodes("C")
+root.addChildNodes("D")
+
+root.childrenNodes[0].addChildNodes("E")
+root.childrenNodes[0].addChildNodes("F")
+
+root.childrenNodes[2].addChildNodes("G")
+root.childrenNodes[2].addChildNodes("H")
+
+root.childrenNodes[0].childrenNodes[1].addChildNodes("I")
+root.childrenNodes[0].childrenNodes[1].addChildNodes("J")
+
+
+root.childrenNodes[2].childrenNodes[0].addChildNodes("K")
+
+print(root.depthfirstSearchRec([]))
+print(root.depthfirstSearchIt([]))
+
+
+

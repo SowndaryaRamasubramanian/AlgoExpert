@@ -1,0 +1,38 @@
+class Node:
+    def __init__(self,name1):
+        self.name1=name1
+        self.children=[]
+
+    def addChildNodes(self,name2):
+        self.children.append(Node(name2))
+
+root=Node("A")
+root.addChildNodes("B")
+root.addChildNodes("C")
+root.addChildNodes("D")
+
+root.children[0].addChildNodes("E")
+root.children[0].addChildNodes("F")
+
+root.children[2].addChildNodes("G")
+root.children[2].addChildNodes("H")
+
+root.children[0].children[1].addChildNodes("I")
+root.children[0].children[1].addChildNodes("J")
+
+root.children[2].children[0].addChildNodes("K")
+
+def DepthFirstSearch(root1):
+    array=[]
+    queue=[]
+    queue.append(root1)
+    while len(queue)!=0:
+        currentElement=queue.pop(0)
+        for child in currentElement.children:
+            queue.append(child)
+        array.append(currentElement.name1)
+    return array
+
+
+print(DepthFirstSearch(root))
+

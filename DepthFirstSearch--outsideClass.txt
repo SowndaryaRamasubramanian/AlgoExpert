@@ -1,0 +1,40 @@
+class Node:
+    def __init__(self,name):
+        self.name=name
+        self.children=[]
+
+    def addChildNodes(self,name1):
+        self.children.append(Node(name1))
+
+root=Node("A")
+root.addChildNodes("B")
+root.addChildNodes("C")
+root.addChildNodes("D")
+root.children[0].addChildNodes("E")
+root.children[0].addChildNodes("F")
+root.children[0].children[1].addChildNodes("I")
+root.children[0].children[1].addChildNodes("J")
+root.children[2].addChildNodes("G")
+root.children[2].addChildNodes("H")
+root.children[2].children[0].addChildNodes("K")
+
+
+def depthfirstSearchRecursive(root2,array=[]):
+    array.append(root2.name)
+    for child in root2.children:
+        depthfirstSearchRecursive(child,array)
+    return array
+
+def depthfirstSearchIterative(root1):
+    visited=[]
+    visited.append(root1.name)
+    stack=root1.children
+    while len(stack)!=0:
+        var=stack.pop(0)
+        visited.append(var.name)
+        if len(var.children)!=0:
+            stack=var.children+stack
+    return visited
+
+print(depthfirstSearchRecursive(root))
+print(depthfirstSearchIterative(root))

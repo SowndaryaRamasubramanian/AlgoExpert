@@ -1,0 +1,70 @@
+matrix =[
+  [1, 0, 0, 0, 0, 0],
+  [0, 1, 0, 1, 1, 1],
+  [0, 0, 1, 0, 1, 0],
+  [1, 1, 0, 0, 1, 0],
+  [1, 0, 1, 1, 0, 0],
+  [1, 0, 0, 0, 0, 1],
+]
+def RemoveIslands(matrix):
+    auxillaryMatrix=[[False for col in row]for row in matrix]
+    for row in range(len(matrix)):
+        for col in range(len(matrix[0])):
+            IsRowBorder= row==0 or row==len(matrix)-1
+            IscolBorder= col==0 or col==len(matrix[0])-1
+            IsBorder=IsRowBorder or IscolBorder
+
+            if not IsBorder:
+                continue
+            if matrix[row][col]==0:
+                continue
+
+            findOnesConnectedToborder(row,col,auxillaryMatrix,matrix)
+
+    for row in range(1,len(matrix)-1):
+        for col in range(1,len(matrix[0])-1):
+            if auxillaryMatrix[row][col]:
+                continue
+            matrix[row][col]=0
+    return matrix
+
+def findOnesConnectedToborder(row,col,auxillaryMatrix,matrix):
+    stack=[(row,col)]
+    while len(stack)>0:
+        current=stack.pop()
+        currentRow,currentCol=current
+
+        alreadyVisited=auxillaryMatrix[currentRow][currentCol]
+        if alreadyVisited:
+            continue
+        auxillaryMatrix[currentRow][currentCol]=True
+        neighbor=getNeighbor(currentRow,currentCol,matrix)
+        for neighbors in neighbor:
+            row,col=neighbors
+            if matrix[row][col]==0:
+                continue
+            stack.append(neighbors)
+
+def getNeighbor(row,col,matrix):
+    neighborArray=[]
+    if row-1>=0:
+        neighborArray.append((row-1,col))
+    if row+1<=len(matrix)-1:
+        neighborArray.append((row+1,col))
+    if col-1>=0:
+        neighborArray.append((row,col-1))
+    if col+1<=len(matrix[0])-1:
+        neighborArray.append((row,col+1))
+    return neighborArray
+
+print(RemoveIslands(matrix))
+
+
+
+
+
+
+
+
+
+

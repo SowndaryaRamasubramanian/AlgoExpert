@@ -1,0 +1,47 @@
+#time--->O(n) and space-->O(1)
+array = [2, 3, 1, -4, -4, 2]
+def SingleCycleCheck(array):
+    numberOfElementsVisited=0
+    StartingIdx=0
+    currentIdx=StartingIdx
+    while numberOfElementsVisited<len(array):
+        if numberOfElementsVisited>0 and currentIdx==StartingIdx:
+            return False
+        numberOfElementsVisited+=1
+        currentIdx=getNextIdx(currentIdx,array)
+    return currentIdx==StartingIdx
+
+def getNextIdx(currentIdx,array):
+    jumps=array[currentIdx]
+    nextIdx=(currentIdx+jumps)%len(array)
+    if nextIdx>=0:
+        return nextIdx
+    else:
+        nextIdx+=len(array)
+        return nextIdx
+
+print(SingleCycleCheck(array))
+
+
+----------------------
+array = [2, 3, 1, -4, -4, 0]
+def SingleCycleCheck(array):
+    numberOfElementsVisited=0
+    StartingIdx=0
+    currentIdx=StartingIdx
+    while numberOfElementsVisited<len(array):
+        if numberOfElementsVisited>0 and currentIdx==StartingIdx:
+            return False
+        numberOfElementsVisited+=1
+        jumps=array[currentIdx]
+        nextIdx=(currentIdx+jumps)%len(array)
+        if nextIdx>=0:
+            currentIdx=nextIdx
+        else:
+            currentIdx=nextIdx+len(array)
+    return currentIdx==StartingIdx
+
+
+print(SingleCycleCheck(array))
+
+
